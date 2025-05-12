@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.seccion7.orm.model.Paciente;
 import com.seccion7.orm.service.PacienteService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 
 @RestController
@@ -21,7 +26,30 @@ public class PacienteController {
 
     @GetMapping
     public ResponseEntity<List<Paciente>> getAll(){
-        return new ResponseEntity<>(pacienteService.findAll(),HttpStatus.OK);
+        List<Paciente> pacientes = pacienteService.findAll();
+        if(!pacientes.isEmpty()){
+            return new ResponseEntity<>(pacientes,HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
     
+    @PostMapping
+    public ResponseEntity<Paciente> postPaciente(@RequestBody Paciente paciente) {
+        Paciente buscado = pacienteService.findByid(paciente.getId());
+        if(buscado==null){
+            return new ResponseEntity<>(pacienteService.save(paciente), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> getById(@PathVariable int id) {
+        return new ResponseEntity<Paciente>(pacienteService.findByid(id), HttpStatus.OK);
+    }
+    
+
 }

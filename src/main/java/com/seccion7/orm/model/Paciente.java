@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 public class Paciente {
     @Id // Clave primaria
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(unique = true)
     private int id;
 
     @Column(length = 13, nullable = false, unique = true)

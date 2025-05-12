@@ -17,4 +17,11 @@ public class PacienteService {
         return pacienteRepository.findAll();
     }
 
+    public Paciente save(Paciente paciente){
+        return pacienteRepository.save(paciente);
+    }
+
+    public Paciente findByid(int id){
+        return pacienteRepository.findById(id);
+    }
 }
