@@ -1,0 +1,1 @@
+# Ejemplo JPA Hospital ejercicio 2.4
